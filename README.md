@@ -3,7 +3,9 @@ Dockerized Saxon-HE 9.9.1-2 (XSLT 3.0 processor)
 
 ## Usage
 
-    docker run --rm -v :"/xml/source.xml" -v :"/xsl/stylesheet.xsl" atomgraph/saxon -s:/xml/source.xml -xsl:/xsl/stylesheet.xsl param=value
+    docker run --rm -v "$PWD/xml/source.xml":"/xml/source.xml" -v "$PWD/xsl/stylesheet.xsl":"/xsl/stylesheet.xsl" atomgraph/saxon -s:/xml/source.xml -xsl:/xsl/stylesheet.xsl param=value
+
+Note that we use `$PWD` in order to make host filepath absolute, as required by Docker's [`-v` (volume) option](https://docs.docker.com/engine/reference/run/#volume-shared-filesystems).
 
 ## Documentation
 
