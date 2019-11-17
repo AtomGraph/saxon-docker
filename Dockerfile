@@ -10,4 +10,6 @@ RUN curl http://repo1.maven.org/maven2/net/sf/saxon/Saxon-HE/9.9.1-2/Saxon-HE-9.
 
 ### entrypoint
 
-ENTRYPOINT ["java", "-jar", "Saxon-HE-9.9.1-2.jar"]
+COPY entrypoint.sh entrypoint.sh
+
+ENTRYPOINT ["/bin/sh", "entrypoint.sh"]
