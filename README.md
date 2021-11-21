@@ -1,5 +1,5 @@
 # saxon-docker
-Dockerized Saxon-HE 9.9.1-2 (XSLT 3.0 processor)
+Dockerized Saxon-HE (XSLT 3.0 processor)
 
 ## Usage
 
