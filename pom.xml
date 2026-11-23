@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Only resolves Saxon-HE and its runtime dependencies (xmlresolver and its own) for the image's build stage, which copies
+     them into lib/; nothing is compiled or published. The version is the image's SAXON_VERSION build argument. -->
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.atomgraph</groupId>
+    <artifactId>saxon-docker</artifactId>
+    <version>1</version>
+    <packaging>pom</packaging>
+
+    <properties>
+        <saxon.version>12.9</saxon.version>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>net.sf.saxon</groupId>
+            <artifactId>Saxon-HE</artifactId>
+            <version>${saxon.version}</version>
+        </dependency>
+    </dependencies>
+</project>
