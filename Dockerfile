@@ -1,15 +1,21 @@
-FROM openjdk:8-jre
+# Saxon-HE's command line, called as `docker run -i atomgraph/saxon -s:<source> -xsl:<stylesheet> [param=value...]`.
+# Since Saxon 12 the jar needs xmlresolver (and its dependencies) beside it, so the build stage resolves them with Maven.
 
-LABEL maintainer="martynas@atomgraph.com"
+FROM maven:3.9.11-eclipse-temurin-21 AS build
 
-ARG SAXON_VERSION=10.6
+ARG SAXON_VERSION=12.9
 
 WORKDIR /usr/src/Saxon-HE
 
-### download Saxon
+COPY pom.xml .
+RUN mvn -B -q dependency:copy-dependencies -Dsaxon.version=${SAXON_VERSION} -DincludeScope=runtime -DoutputDirectory=lib
 
-RUN curl https://repo1.maven.org/maven2/net/sf/saxon/Saxon-HE/${SAXON_VERSION}/Saxon-HE-${SAXON_VERSION}.jar -o Saxon-HE.jar
+FROM eclipse-temurin:21-jre
 
-### entrypoint
+LABEL maintainer="martynas@atomgraph.com"
 
-ENTRYPOINT ["java", "-jar", "Saxon-HE.jar"]
+WORKDIR /usr/src/Saxon-HE
+
+COPY --from=build /usr/src/Saxon-HE/lib lib
+
+ENTRYPOINT ["java", "-cp", "/usr/src/Saxon-HE/lib/*", "net.sf.saxon.Transform"]
